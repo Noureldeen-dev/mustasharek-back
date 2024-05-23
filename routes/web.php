@@ -11,11 +11,14 @@ use App\Http\Controllers\FilesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\BookCategoriesController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConsultationsCategoriesController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SectionController;
+
 use App\Http\Controllers\ManReportController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\DeliveryManController;
@@ -34,7 +37,12 @@ use App\Http\Controllers\SizeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use Illuminate\Support\Facades\Artisan;
 
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return 'Database migration completed successfully!';
+})->name('migrate');
 
 Auth::routes(['register' => false]);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -47,7 +55,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('admins', AdminsController::class);
     Route::resource('cities', CityController::class);
     Route::resource('areas', DeliveryAreaController::class);
-    Route::resource('sections', SectionController::class);
+    Route::resource('bookcategories', BookCategoriesController::class);
+    Route::resource('book', BookController::class);
+    Route::resource('consultationsCategories', ConsultationsCategoriesController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('brands', BrandController::class);
     Route::resource('products', ProductController::class);

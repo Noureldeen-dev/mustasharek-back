@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConsultationsCategories;
 use Exception;
-use App\Models\section;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
-class SectionController extends Controller
+class ConsultationsCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $sections = section::latest()->get();
-        return view('admin.sections.index', compact('sections'));
+        $bookcategories = ConsultationsCategories::latest()->get();
+        return view('admin.consultationsCategories.index', compact('bookcategories'));
     }
 
     /**
@@ -41,15 +42,9 @@ class SectionController extends Controller
         );
         try {
 
-            $section = section::create($valid);
-            if($request->hasfile('icon'))
-            {
-                $fileName = time() . '.' . $request->icon->extension();
-                $request->icon->storeAs('public/icons/sections', $fileName);
-
-                $section->icon = $fileName;
-                $section->save();
-            }
+            $bookcategories = ConsultationsCategories::create($valid);
+           
+            $bookcategories->save();
             toast('تمت العملية بنجاح', 'success');
         } catch (Exception $e) {
 
@@ -86,18 +81,11 @@ class SectionController extends Controller
         ]);
         $id = Crypt::decrypt($id);
         try {
-            $section = section::findOrFail($id);
-
-            $section->update($valid);
-            if($request->hasfile('icon'))
-            {
-                
-                $fileName = time() . '.' . $request->icon->extension();
-                $request->icon->storeAs('public/icons/sections', $fileName);
-
-                $section->icon = $fileName;
-                $section->save();
-            }
+            $bookcategories = ConsultationsCategories::findOrFail($id);
+            
+            $bookcategories->update($valid);
+          
+            $bookcategories->save();
             toast('تمت العملية بنجاح', 'success');
         } catch (Exception $e) {
         }
@@ -111,8 +99,9 @@ class SectionController extends Controller
     {
         try {
             $id =  Crypt::decrypt($id);
-            $section = section::findOrFail($id);
-            $section->destroy($id);
+            $bookcategories = ConsultationsCategories::findOrFail($id);
+            $bookcategories->destroy($id);
+
             toast('تم الحذف ', 'success');
         } catch (\Exception $e) {
             toast('حدث خطأ', 'error');

@@ -54,8 +54,8 @@
                                     </span>
                                 </div>
                                 <div class="float-right text-right">
-                                    <p class="card-text text-dark">المبيعات اليومية</p>
-                                    <h4>{{ $price }} دينار </h4>
+                                    <p class="card-text text-dark">عدد الإستشارات </p>
+                                    <h4>150 إستشارة</h4>
                                 </div>
                             </div>
 
@@ -68,12 +68,12 @@
                             <div class="clearfix">
                                 <div class="float-left">
                                     <span class="text-warning">
-                                        <i class="fa fa-shopping-cart highlight-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-user highlight-icon" aria-hidden="true"></i>
                                     </span>
                                 </div>
                                 <div class="float-right text-right">
-                                    <p class="card-text text-dark">المبيعات الشهرية</p>
-                                    <h4>{{ $MonthPrice }} دينار</h4>
+                                    <p class="card-text text-dark">عدد المستخدمين</p>
+                                    <h4>200 مستخدم</h4>
                                 </div>
                             </div>
 

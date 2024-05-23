@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('css')
 @section('title')
-    <?php echo $title = 'الاقسام'; ?>
+    <?php echo $title = 'اقسام الإستشارات'; ?>
 @stop
 @endsection
 @section('page-header')
@@ -40,38 +40,31 @@
                             <tr>
                                 <th>الرقم</th>
                                 <th>اسم القسم</th>
-                                <th>الايقونة</th>
-                                <th>تاريخ الانشاء</th>
+                           
                                 <th>تعديلات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($sections as $section)
+                            @foreach ($bookcategories as $bookcat)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $section->name }}</td>
-                                    <td>
-                                        @if($section->icon)
-                                        <img src="{{ asset('storage/icons/sections/'.$section->icon) }}" style="height: 50px;width:50px;">
-                                        @else 
-                                        <span>No image found!</span>
-                                        @endif
-                                    </td>
+                                    <td>{{ $bookcat->name }}</td>
+                                  
 
-                                    <td>{{ $section->created_at->format('Y-m-d') }}</td>
+                               
                                     <td>
                                         <button type="button" data-toggle="modal"
-                                            data-target="#edit{{ $section->id }}" title="تعديل"
+                                            data-target="#edit{{ $bookcat->id }}" title="تعديل"
                                             class="btn btn-info btn-sm" title="تعديل"><i
                                                 class="fa fa-edit"></i></button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#delete{{ $section->id }}" title="حذف"><i
+                                            data-target="#delete{{ $bookcat->id }}" title="حذف"><i
                                                 class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                 </div>
                 <!-- edit_modal_Section -->
-                <div class="modal fade" id="edit{{ $section->id }}" tabindex="-1" role="dialog"
+                <div class="modal fade" id="edit{{ $bookcat->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -84,16 +77,15 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('sections.update', Crypt::encrypt($section->id)) }}" enctype="multipart/form-data"
+                                <form action="{{ route('consultationsCategories.update', Crypt::encrypt($bookcat->id)) }}" enctype="multipart/form-data"
                                     method="post">
                                     {{ method_field('put') }}
                                     @csrf
                                     <label for="Name" class="mr-sm-2"> الاسم
                                         :</label>
-                                    <input class="form-control" type="text" value="{{ $section->name }}"
+                                    <input class="form-control" type="text" value="{{ $bookcat->name }}"
                                         name="name" required />
-                                        <label for="icon"> ايقونة</label>
-                                        <input type="file" name="icon" class="form-control">
+                                        
 
                                     <br><br>
                             </div>
@@ -107,7 +99,7 @@
                     </div>
                 </div>
                 <!-- delete_modal_Section -->
-                <div class="modal fade" id="delete{{ $section->id }}" tabindex="-1" role="dialog"
+                <div class="modal fade" id="delete{{ $bookcat->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -120,7 +112,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('sections.destroy', Crypt::encrypt($section->id)) }}"
+                                <form action="{{ route('consultationsCategories.destroy', Crypt::encrypt($bookcat->id)) }}"
                                     method="post">
                                     {{ method_field('Delete') }}
                                     @csrf
@@ -153,19 +145,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    اضافة قسم جديد
+                    اضافة قسم استشاره  جديد
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('sections.store') }}" enctype="multipart/form-data" method="POST">
+                <form action="{{ route('consultationsCategories.store') }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     <label for="Name" class="mr-sm-2"> الاسم:</label>
                     <input class="form-control" type="text" name="name" required />
-                    <label for="icon"> ايقونة</label>
-                    <input type="file" name="icon" class="form-control">
+                 
 
                     <br><br>
                     <div class="modal-footer">

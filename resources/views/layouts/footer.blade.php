@@ -7,16 +7,10 @@
                         <script>
                             document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
                         </script>
-                    </span>. <a href="#"> AlgeRiany </a> All Rights Reserved. </p>
+                    </span>. <a href="https://www.expertlibya.com/"> expertlibya </a> All Rights Reserved. </p>
             </div>
         </div>
-        <div class="col-md-6">
-            <ul class="text-center text-md-right">
-                <li class="list-inline-item"><a href="#">Terms & Conditions </a> </li>
-                <li class="list-inline-item"><a href="#">API Use Policy </a> </li>
-                <li class="list-inline-item"><a href="#">Privacy Policy </a> </li>
-            </ul>
-        </div>
+        
     </div>
 </footer>
 <!-- Footer closed -->
