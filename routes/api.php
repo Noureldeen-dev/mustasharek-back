@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Api\ProductControllerApi;
@@ -26,6 +27,7 @@ use Laravel\Passport\Passport;
 Route::get('orders/{user_id}/order_product', [OrderController::class, 'getOrderWithProducts']);
 
 Route::resource('products', ApiProductController::class);
+Route::resource('Consultation', ConsultationController::class);
 Route::get('/getSections', [ApiProductController::class, 'getSections']);
 Route::get('/getgender/{gender}', [ApiProductController::class, 'getgender']);
 Route::get('/getmark/{mark}', [ApiProductController::class, 'getmark']);
@@ -35,7 +37,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/userreport', [AuthController::class, 'userreport']);
 Route::put('/profile', [AuthController::class, 'update']);
 
-Route::post('/checkout', [OrderController::class, 'store']);
+Route::post('/checkout', [ConsultationController::class, 'store']);
 Route::post('/cart/add', [CartController::class, 'store']);
 Route::get('/cities', function (Request $request) {
     $cities = city::all();
