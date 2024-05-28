@@ -63,6 +63,7 @@ class ConsultationController  extends Controller
         $consultation = Consultation::create([
             'user_id' => $user->id,
             'title' => $request->title,
+            'consultations_id' => $request->consultations_id,
             'content' => $request->content,
             'file' => $imagePath,
             'status' => 'pending',
@@ -76,7 +77,7 @@ class ConsultationController  extends Controller
             'user_id' => $user->id,
             'title' => $request->title,
             'content' => $request->content,
-         
+            'consultations_id' => $request->consultations_id,
             'status' => 'pending',
             'value' => $request->value,
         ]);

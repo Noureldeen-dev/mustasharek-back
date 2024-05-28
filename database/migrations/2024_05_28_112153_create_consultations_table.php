@@ -14,14 +14,16 @@ return new class extends Migration
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('consultations_id');
             $table->string('title');
             $table->text('content');
             $table->string('file')->nullable();
             $table->enum('status', ['open', 'closed', 'pending'])->default('pending');
             $table->decimal('value', 10, 2);
             $table->timestamps();
-
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('consultations_id')->references('id')->on('consultations_categories')->onDelete('cascade');
         });
     }
 
