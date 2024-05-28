@@ -12,6 +12,7 @@ use Laravel\Passport\Passport;
 use Laravel\Passport\Token;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -55,20 +56,30 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $tokenResult = $user->createToken('nour');
-            $token = $tokenResult->accessToken;
+            $token = $user->createToken('API Token')->accessToken;
+
+            $userRoles = $user->getRoleNames();
 
             return response()->json([
+                'message' => 'User logged in successfully',
                 'user' => $user,
+                'roles' => $userRoles,
                 'token' => $token,
-            ]);
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Invalid email or password',
+            ], 401);
         }
-
-        return response()->json(['error' => 'Unauthenticated'], 401);
     }
 
     public function getUserByToken(Request $request)
@@ -112,18 +123,16 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
-            'avatar' => 'nullable',
+            'password' => 'nullable',
             'phone' => 'required|numeric',
-            'address' => 'required',
+           
         ],[
             'name.required' => 'الإسم مطلوب',
             'email.required' => 'البريد الالكتروني مطلوب',
             'password.required' => 'الرمز السري مطلوب',
-            'avatar.required' => 'الصورة مطلوبة',
-            'email.email' => 'البريد الالكتروني غير صالح',
+      
             'phone.required' => ' رقم الهاتف مطلوب',
-            'avatar.mimes' => 'صيغة الصورة غير صالحة',
+
         ]
     );
 
@@ -135,17 +144,31 @@ $user = User::create([
     'name' => $request->name,
     'password' => $request->password,
     'email' => $request->email,
-    'avatar' => $request->avatar,
-    'phone' => $request->phone,
-    'address' => $request->address,
-]);
 
- $tokenResult = $user->createToken('nour');
-  $token = $tokenResult->accessToken;
+    //'phone' => $request->phone,
+
+]);
+$role = Role::where('name', 'USER')->first();
+if (!$role) {
+    $role = Role::create(['name' => 'USER']);
+}
+$user->assignRole($role);
+
+ //$tokenResult = $user->createToken('nour');
+  //$token = $tokenResult->accessToken;
+  $token = $user->createToken('API Token')->accessToken;
+  $userRoles = $user->getRoleNames();
+  
+  return response()->json([
+    'message' => 'User registered successfully',
+    'user' => $user,
+    'token' => $token,
+    'roles' => $userRoles,
+], 201);
 
 return response()->json([
                 'user' => $user,
-                'token' => $token,
+                //'token' => $token,
             ]);
     }
     public function update(Request $request)
