@@ -28,6 +28,7 @@ Route::get('orders/{user_id}/order_product', [OrderController::class, 'getOrderW
 
 Route::resource('products', ApiProductController::class);
 Route::resource('Consultation', ConsultationController::class);
+Route::resource('Order', OrderController::class);
 Route::get('/getSections', [ApiProductController::class, 'getSections']);
 Route::get('/getgender/{gender}', [ApiProductController::class, 'getgender']);
 Route::get('/getmark/{mark}', [ApiProductController::class, 'getmark']);
