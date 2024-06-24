@@ -66,7 +66,7 @@
                             <div class="clearfix"></div>
                         </a>
                         <ul id="brands" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="{{ route('brands.index') }}">معالجة بيانات الإستشارات </a></li>
+                            <li><a href="{{ route('consultations.index') }}">معالجة بيانات الإستشارات </a></li>
                             
                         </ul>
                     </li>

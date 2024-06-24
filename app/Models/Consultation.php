@@ -13,4 +13,8 @@ class Consultation  extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function consultationcat()
+    {
+        return $this->belongsTo(ConsultationsCategories::class, 'consultations_id', 'id');
+    }
 }

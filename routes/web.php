@@ -16,6 +16,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsultationsCategoriesController;
+use App\Http\Controllers\ConsultationsController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductController;
 
@@ -59,7 +60,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('book', BookController::class);
     Route::resource('consultationsCategories', ConsultationsCategoriesController::class);
     Route::resource('categories', CategoryController::class);
-    Route::resource('brands', BrandController::class);
+    Route::resource('consultations', ConsultationsController::class);
+    Route::get('download/{file}', [ConsultationsController::class, 'download'])->name('download_file');
     Route::resource('products', ProductController::class);
     Route::resource('coupons', CouponController::class);
     Route::resource('opinions', CustomerOpinionController::class);

@@ -34,62 +34,60 @@ class ConsultationController  extends Controller
         return response()->json($order);
     }
     public function store(Request $request)
-{
-    $user = Auth::guard('api')->user();
-
-    $request->validate([
-        'title' => 'required|string',
-        'content' => 'required|string',
-        'value' => 'required|numeric',
-    ]);
-    if ($request->hasFile('file')) {
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
-        $file = $request->file('file');
-        $fileExtension = $file->getClientOriginalExtension();
-    if (!in_array($fileExtension, $allowedExtensions)) {
-        return response()->json(['error' => 'السماح بملفات الصور (JPG، JPEG، PNG) وملفات PDF فقط.'], 422);
-    }
-    $maxSize = 10 * 1024 * 1024; // 10 ميجا بايت
-    if ($file->getSize() > $maxSize) {
-        return response()->json(['error' => 'يجب ألا يتجاوز حجم الملف 10 ميجا بايت.'], 422);
-    }
+    {
+        $user = Auth::guard('api')->user();
     
-   
-        $fl = $request->file('file');
-        $imageName = time() . '.' . $fl->getClientOriginalExtension();
-        $imagePath = $fl->move(public_path('consultation'), $imageName);
-    
-
-        $consultation = Consultation::create([
-            'user_id' => $user->id,
-            'title' => $request->title,
-            'consultations_id' => $request->consultations_id,
-            'content' => $request->content,
-            'file' => $imagePath,
-            'status' => 'pending',
-            'value' => $request->value,
-        ]);
-
-        return response()->json($consultation, 201);
-    } else {
-   
-        $consultation = Consultation::create([
-            'user_id' => $user->id,
-            'title' => $request->title,
-            'content' => $request->content,
-            'consultations_id' => $request->consultations_id,
-            'status' => 'pending',
-            'value' => $request->value,
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'value' => 'required|numeric',
         ]);
     
-        return response()->json([
-            'success' => true,
-            'message' => 'تم انشاء الطلب بنجاح',
-            'consultation' => $consultation,
-        ], 201);
+        if ($request->hasFile('file')) {
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+            $file = $request->file('file');
+            $fileExtension = $file->getClientOriginalExtension();
+    
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                return response()->json(['error' => 'السماح بملفات الصور (JPG، JPEG، PNG) وملفات PDF فقط.'], 422);
+            }
+    
+            $maxSize = 10 * 1024 * 1024; // 10 ميجا بايت
+            if ($file->getSize() > $maxSize) {
+                return response()->json(['error' => 'يجب ألا يتجاوز حجم الملف 10 ميجا بايت.'], 422);
+            }
+    
+            $imageName = $file->getClientOriginalName();
+            $file->move(public_path('consultation'), $imageName);
+    
+            $consultation = Consultation::create([
+                'user_id' => $user->id,
+                'title' => $request->title,
+                'consultations_id' => $request->consultations_id,
+                'content' => $request->content,
+                'file' => $imageName, // Store only the file name
+                'status' => 'pending',
+                'value' => $request->value,
+            ]);
+    
+            return response()->json($consultation, 201);
+        } else {
+            $consultation = Consultation::create([
+                'user_id' => $user->id,
+                'title' => $request->title,
+                'content' => $request->content,
+                'consultations_id' => $request->consultations_id,
+                'status' => 'pending',
+                'value' => $request->value,
+            ]);
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'تم انشاء الطلب بنجاح',
+                'consultation' => $consultation,
+            ], 201);
+        }
     }
-    }
-   
 
     
     /**

@@ -11,6 +11,7 @@ class ConsultationsCategories extends Model
 
     protected $fillable = [
         'name',
+        'price',
     ];
     
 }

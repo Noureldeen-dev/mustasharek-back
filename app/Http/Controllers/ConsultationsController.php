@@ -4,21 +4,30 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Brand;
+use App\Models\Consultation;
 use App\Models\section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
-class BrandController extends Controller
+class ConsultationsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $brands = Brand::latest()->get();
-        return view('admin.brands.index', compact('brands'));
+        $Con = Consultation::latest()->get();
+        return view('admin.consultations.index', compact('Con'));
     }
-
+    public function download($file)
+    {
+        $filePath = public_path('consultation/' . $file);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        } else {
+            return response()->json(['error' => 'الملف غير موجود.'], 404);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -54,9 +63,12 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Brand $brand)
+    public function show($id)
     {
-        //
+        $consultation = Consultation::findOrFail($id);
+
+        // Pass the consultation data to the view
+        return view('admin.consultations.show', compact('consultation'));
     }
 
     /**

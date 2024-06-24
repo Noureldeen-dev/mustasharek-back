@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('css')
 @section('title')
-    <?php echo $title = 'اقسام الإستشارات'; ?>
+<?php echo $title = 'الإستشارات'; ?>
 @stop
 @endsection
 @section('page-header')
@@ -23,49 +23,48 @@
 @endsection
 @section('content')
 <!-- row -->
-<button type="button" class="button x-small" data-toggle="modal" data-target="#exampleModal">
-    أضافة
-</button>
+
 <br><br>
 <div class="row">
     <div class="col-xl-12 mb-30">
         <div class="card card-statistics h-100">
             <div class="card-body">
                 @if ($errors->any())
-                    <?php Alert::error($errors->all(), 'هناك خطأ في الحقول')->showConfirmButton('تم', '#c0392b'); ?>
+                <?php Alert::error($errors->all(), 'هناك خطأ في الحقول')->showConfirmButton('تم', '#c0392b'); ?>
                 @endif
                 <div class="table-responsive">
                     <table id="datatable" class="table table-striped table-bordered p-0 table-hover">
                         <thead>
                             <tr>
                                 <th>الرقم</th>
-                                <th>اسم القسم</th>
-                                <th>السعر</th>
+                                <th>اسم المستخدم</th>
+                                <th>تصنيف الإستشارة</th>
                                 <th>تعديلات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($bookcategories as $bookcat)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $bookcat->name }}</td>
-                                    <td>{{ $bookcat->price }}</td>
+                            @foreach ($Con as $Cons)
+                            <tr>
+                                <td>{{ $Cons->id }}</td>
 
-                               
-                                    <td>
-                                        <button type="button" data-toggle="modal"
-                                            data-target="#edit{{ $bookcat->id }}" title="تعديل"
-                                            class="btn btn-info btn-sm" title="تعديل"><i
-                                                class="fa fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#delete{{ $bookcat->id }}" title="حذف"><i
-                                                class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
+                                <td>{{ $Cons->user->name }}</td>
+                                <td>{{ $Cons->consultationcat->name }}</td>
+
+
+
+
+
+                                <td>
+
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ $Cons->id }}" title="حذف"><i class="fa fa-trash"></i></button>
+                                    <a href="{{ route('consultations.show', $Cons->id) }}" class="btn btn-success btn-sm" title="عرض">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
                 </div>
                 <!-- edit_modal_Section -->
-                <div class="modal fade" id="edit{{ $bookcat->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="edit{{ $Cons->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -77,20 +76,13 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('consultationsCategories.update', Crypt::encrypt($bookcat->id)) }}" enctype="multipart/form-data"
-                                    method="post">
+                                <form action="{{ route('bookcategories.update', Crypt::encrypt($Cons->id)) }}" enctype="multipart/form-data" method="post">
                                     {{ method_field('put') }}
                                     @csrf
                                     <label for="Name" class="mr-sm-2"> الاسم
                                         :</label>
-                                    <input class="form-control" type="text" value="{{ $bookcat->name }}"
-                                        name="name" required />
-                                        <label for="Name" class="mr-sm-2"> السعر
-                                        :</label>
-                                    <input class="form-control" type="number" value="{{ $bookcat->price }}"
-                                        name="price" required />
+                                    <input class="form-control" type="text" value="{{ $Cons->name }}" name="name" required />
 
-                                     
 
                                     <br><br>
                             </div>
@@ -104,8 +96,7 @@
                     </div>
                 </div>
                 <!-- delete_modal_Section -->
-                <div class="modal fade" id="delete{{ $bookcat->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="delete{{ $Cons->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -117,15 +108,13 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('consultationsCategories.destroy', Crypt::encrypt($bookcat->id)) }}"
-                                    method="post">
+                                <form action="{{ route('bookcategories.destroy', Crypt::encrypt($Cons->id)) }}" method="post">
                                     {{ method_field('Delete') }}
                                     @csrf
                                     <h3 class="text-center">هل انت متأكد من عملية الحذف ؟</h3>
-                                    <p class="text-center"> اذا تم الحذف سوف يتم حذف كل ماهو متعلق بهذا القسم</p>
+                                    <p class="text-center"> اذا تم الحذف سوف يتم حذف كل ماهو متعلق بهذا الإستشارة</p>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">رجوع</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">رجوع</button>
                                         <button type="submit" class="btn btn-danger">حفظ</button>
                                     </div>
                                 </form>
@@ -144,25 +133,23 @@
 
 <!-- add_modal_Section -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    اضافة قسم استشاره  جديد
+                    اضافة قسم كتاب جديد
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('consultationsCategories.store') }}" enctype="multipart/form-data" method="POST">
+                <form action="{{ route('bookcategories.store') }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     <label for="Name" class="mr-sm-2"> الاسم:</label>
                     <input class="form-control" type="text" name="name" required />
-                    <label for="Name" class="mr-sm-2"> السعر:</label>
-                    <input class="form-control" type="number" name="price" required />
+
 
                     <br><br>
                     <div class="modal-footer">

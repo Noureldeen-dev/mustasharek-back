@@ -35,9 +35,11 @@ class ConsultationsCategoriesController extends Controller
         $valid = $request->validate(
             [
                 'name' => 'required',
+                'price' => 'required',
             ],
             [
                 'name.required' => 'الإسم مطلوب',
+                'price.required' => 'السعر مطلوب',
             ]
         );
         try {
@@ -74,11 +76,16 @@ class ConsultationsCategoriesController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $valid = $request->validate([
-            'name' => 'required',
-        ], [
-            'name.required' => 'الإسم مطلوب',
-        ]);
+        $valid = $request->validate(
+            [
+                'name' => 'required',
+                'price' => 'required',
+            ],
+            [
+                'name.required' => 'الإسم مطلوب',
+                'price.required' => 'السعر مطلوب',
+            ]
+        );
         $id = Crypt::decrypt($id);
         try {
             $bookcategories = ConsultationsCategories::findOrFail($id);
