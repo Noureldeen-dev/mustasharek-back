@@ -39,11 +39,13 @@ class BookController extends Controller
             'name' => 'required',
             'book_category_id' => 'required',
             'price' => 'required',
+            'content' => 'required',
             'image' => 'required|image|max:2048', // Add image validation rules
         ], [
             'name.required' => 'اسم الكتاب مطلوب',
             'book_category_id.required' => 'تصنيف الكتاب مطلوب',
             'price.required' => 'سعر الكتاب مطلوب',
+            'content.required' => 'وصف الكتاب مطلوب',
             'image.required' => 'صورة الكتاب مطلوب',
             'image.image' => 'الملف المرفوع يجب أن يكون صورة',
             'image.max' => 'الصورة يجب أن لا تتجاوز 2 ميجابايت',
@@ -89,54 +91,57 @@ class BookController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $id = Crypt::decrypt($id);
-    $book = Book::findOrFail($id);
+    {
+        $id = Crypt::decrypt($id);
+        $book = Book::findOrFail($id);
+    
+        $valid = $request->validate([
+            'content' => 'required',
+            'name' => 'required',
+            'book_category_id' => 'required',
+            'price' => 'required',
+            'image' => 'nullable|image|max:2048', // Update image validation rules
+        ], [
+            'name.required' => 'اسم الكتاب مطلوب',
+            'book_category_id.required' => 'تصنيف الكتاب مطلوب',
+            'price.required' => 'سعر الكتاب مطلوب',
+            'content.required' => 'وصف الكتاب مطلوب',
+            'image.image' => 'الملف المرفوع يجب أن يكون صورة',
+            'image.max' => 'الصورة يجب أن لا تتجاوز 2 ميجابايت',
+        ]);
+    
+        try {
+            // Handle image upload if a new image is provided
+            if ($request->hasFile('image')) {
+               
+                $image = $request->file('image');
+                $imageName = $image->getClientOriginalName();
+                $imagePath = $image->move(public_path('books'), $imageName);
 
-    $valid = $request->validate([
-        'name' => 'required',
-        'book_category_id' => 'required',
-        'price' => 'required',
-        'image' => 'image|max:2048', // Update image validation rules
-    ], [
-        'name.required' => 'اسم الكتاب مطلوب',
-        'book_category_id.required' => 'تصنيف الكتاب مطلوب',
-        'price.required' => 'سعر الكتاب مطلوب',
-        'image.image' => 'الملف المرفوع يجب أن يكون صورة',
-        'image.max' => 'الصورة يجب أن لا تتجاوز 2 ميجابايت',
-    ]);
 
-    try {
-        // Handle image upload if a new image is provided
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $imagePath = $image->move(public_path('books'), $imageName);
-
-            // Delete the old image if it exists
-            if ($book->image) {
-                $oldImagePath = public_path('books/' . $book->image);
-                if (File::exists($oldImagePath)) {
-                    File::delete($oldImagePath);
-                }
+                $book->name = $request->name;
+            $book->book_category_id = $request->book_category_id;
+            $book->price = $request->price;
+            $book->image =$imageName;
+            }else{
+                $book->name = $request->name;
+            $book->book_category_id = $request->book_category_id;
+            $book->price = $request->price;
+           
             }
-
-            $book->image = $imageName;
+    
+           
+   
+            $book->save();
+    
+            toast('تمت العملية بنجاح', 'success');
+        } catch (Exception $e) {
+            // Handle exception
+            toast('حدث خطأ أثناء تعديل الكتاب', 'error');
         }
-
-        $book->name = $request->name;
-        $book->book_category_id = $request->book_category_id;
-        $book->price = $request->price;
-        $book->save();
-
-        toast('تمت العملية بنجاح', 'success');
-    } catch (Exception $e) {
-        // Handle exception
-        toast('حدث خطأ أثناء تعديل الكتاب', 'error');
+    
+        return back();
     }
-
-    return back();
-}
 
     /**
      * Remove the specified resource from storage.

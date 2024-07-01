@@ -43,6 +43,7 @@
                             <li><a href="{{ route('consultationsCategories.index') }}">معالجة بيانات اقسام الإستشارات</a></li>
 
                         </ul>
+                        
                     </li>
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#categories">
@@ -67,6 +68,19 @@
                         </a>
                         <ul id="brands" class="collapse" data-parent="#sidebarnav">
                             <li><a href="{{ route('consultations.index') }}">معالجة بيانات الإستشارات </a></li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#banner">
+                            <div class="pull-left"><i class="ti-harddrives"></i><span
+                                    class="right-nav-text">البانرات </span>
+                            </div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="banner" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('banner.index') }}">معالجة بيانات البانرات </a></li>
                             
                         </ul>
                     </li>

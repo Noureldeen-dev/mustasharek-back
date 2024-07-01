@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('css')
 @section('title')
-    <?php echo $title = ' الكتب'; ?>
+    <?php echo $title = ' بانر'; ?>
 @stop
 @endsection
 @section('page-header')
@@ -40,30 +40,32 @@
                         <thead>
                             <tr>
                                 <th>الرقم</th>
-                                <th>اسم الكتاب</th>
-                                <th>سعر الكتاب</th>
-                                <th>تصنيف الكتاب</th>
-                                <th>وصف الكتاب</th>
-                                <th>صورة الكتاب</th>
+                           
+                                <th>صورة البنر</th>
+                                <th>الحالة</th>
                                 <th>تعديلات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($book as $bookcat)
+                            @foreach ($banner as $bookcat)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $bookcat->name }}</td>
-                                    <td>{{ $bookcat->price }}</td>
-                                    <td>{{ $bookcat->bookCategory->name }}</td>
-                                    <td>{{ $bookcat->content }}</td>
+              
+                                   
                                  
                                     <td>
-                                    <a href="#" class="btn btn-primary book-image-btn" data-image="{{ asset('books/' . $bookcat->image) }}">
+                                    <a href="#" class="btn btn-primary book-image-btn" data-image="{{ asset('banners/' . $bookcat->image) }}">
     عرض الصورة
 </a>
-            </td>
-                                  
-
+<td>
+    <span style="color: @if ($bookcat->status == 'active') green @else red @endif">
+        @if ($bookcat->status == 'active')
+            مفعل
+        @else
+            معطل
+        @endif
+    </span>
+</td>
                                
                                     <td>
                                         <button type="button" data-toggle="modal"
@@ -81,7 +83,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="bookImageModalLabel">صورة الكتاب</h5>
+                <h5 class="modal-title" id="bookImageModalLabel">صورة البنر</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -93,50 +95,43 @@
 
 
                 <!-- edit_modal_Section -->
-<div class="modal fade" id="edit{{ $bookcat->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="edit{{ $bookcat->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">تعديل بيانات الكتاب</h5>
+                <h5 class="modal-title" id="exampleModalLabel">تعديل بيانات البنر</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('book.update', Crypt::encrypt($bookcat->id)) }}" enctype="multipart/form-data" method="post">
+                <form action="{{ route('banner.update', Crypt::encrypt($bookcat->id)) }}" enctype="multipart/form-data" method="post">
                     {{ method_field('put') }}
                     @csrf
-                    <div class="form-group">
-                        <label for="Name" class="mr-sm-2">الاسم:</label>
-                        <input class="form-control" type="text" value="{{ $bookcat->name }}" name="name" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="content" class="mr-sm-2">وصف الكتاب:</label>
-                        <input class="form-control" type="text" value="{{ $bookcat->content }}" name="content" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="book_category_id" class="mr-sm-2">تصنيف الكتاب:</label>
-                        <select class="form-control" name="book_category_id" required>
-                            <option value="{{ $bookcat->book_category_id }}">{{ $bookcat->bookCategory->name }}</option>
-                            @foreach ($bookCategories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="price" class="mr-sm-2">السعر:</label>
-                        <input class="form-control" type="number" value="{{ $bookcat->price }}" name="price" required />
-                    </div>
+
                     <div class="form-group">
                         <label for="image" class="mr-sm-2">الصورة:</label>
                         <div class="d-flex align-items-center">
-                            <img src="{{ asset('books/' . $bookcat->image) }}" alt="{{ $bookcat->name }} Image" class="img-thumbnail mr-3" style="max-width: 100px;">
+                            <img src="{{ asset('banners/' . $bookcat->image) }}" alt="{{ $bookcat->id }} Image" class="img-thumbnail mr-3" style="max-width: 100px;">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="image" name="image">
                                 <label class="custom-file-label" for="image">اختر صورة</label>
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+    <label for="status" class="mr-sm-2">الحالة:</label>
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="radio" value="active" role="switch" id="status" name="status" {{ $bookcat->status == 'active' ? 'checked' : '' }}>
+        <label class="form-check-label" for="status">اظهار</label>
+    </div>
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="radio" value="inactive" role="switch" id="status" name="status" {{ $bookcat->status == 'inactive' ? 'checked' : '' }}>
+        <label class="form-check-label" for="status">اخفاء</label>
+    </div>
+</div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">رجوع</button>
                         <button type="submit" class="btn btn-success">حفظ</button>
@@ -153,7 +148,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">
-                                    حذف الكتاب
+                                    حذف البنر
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -165,7 +160,7 @@
                                     {{ method_field('Delete') }}
                                     @csrf
                                     <h3 class="text-center">هل انت متأكد من عملية الحذف ؟</h3>
-                                    <p class="text-center"> اذا تم الحذف سوف يتم حذف كل ماهو متعلق بهذا الكتاب</p>
+                                    <p class="text-center"> اذا تم الحذف سوف يتم حذف كل ماهو متعلق بهذا البنر</p>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">رجوع</button>
@@ -193,38 +188,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    اضافة  كتاب جديد
+                    اضافة  بانر جديد
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-    <form action="{{ route('book.store') }}" enctype="multipart/form-data" method="POST">
+    <form action="{{ route('banner.store') }}" enctype="multipart/form-data" method="POST">
         @csrf
+       
+     
+      
+       
         <div class="form-group">
-            <label for="Name" class="mr-sm-2">الاسم:</label>
-            <input class="form-control" type="text" name="name" required />
-        </div>
-        <div class="form-group">
-    <label for="book_category_id" class="mr-sm-2">تصنيف الكتاب:</label>
-    <select class="form-control" name="book_category_id" required>
-        <option value="">اختر تصنيف الكتاب</option>
-        @foreach ($bookCategories as $category)
-            <option value="{{ $category->id }}">{{ $category->name }}</option>
-        @endforeach
-    </select>
-</div>
-        <div class="form-group">
-            <label for="price" class="mr-sm-2">السعر:</label>
-            <input class="form-control" type="number" name="price" required />
-        </div>
-        <div class="form-group">
-                        <label for="content" class="mr-sm-2">وصف الكتاب:</label>
-                        <input class="form-control" type="text" value="{{ $bookcat->content }}" name="content" required />
-                    </div>
-        <div class="form-group">
-            <label for="image" class="mr-sm-2">صورة الكتاب:</label>
+            <label for="image" class="mr-sm-2">صورة البنر:</label>
             <input class="form-control-file" type="file" name="image" required />
         </div>
         <div class="modal-footer">
