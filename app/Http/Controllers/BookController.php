@@ -122,12 +122,13 @@ class BookController extends Controller
                 $book->name = $request->name;
             $book->book_category_id = $request->book_category_id;
             $book->price = $request->price;
+            $book->content = $request->content;
             $book->image =$imageName;
             }else{
                 $book->name = $request->name;
             $book->book_category_id = $request->book_category_id;
             $book->price = $request->price;
-           
+            $book->content = $request->content;
             }
     
            

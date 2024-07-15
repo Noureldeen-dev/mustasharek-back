@@ -221,7 +221,7 @@
         </div>
         <div class="form-group">
                         <label for="content" class="mr-sm-2">وصف الكتاب:</label>
-                        <input class="form-control" type="text" value="{{ $bookcat->content }}" name="content" required />
+                        <input class="form-control" type="text"  name="content" required />
                     </div>
         <div class="form-group">
             <label for="image" class="mr-sm-2">صورة الكتاب:</label>

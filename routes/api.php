@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BannersController;
+use App\Http\Controllers\Api\BooksApiController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController as ApiProductController;
@@ -25,6 +28,10 @@ use Laravel\Passport\Passport;
 */
 //products
 Route::get('orders/{user_id}/order_product', [OrderController::class, 'getOrderWithProducts']);
+
+Route::resource('banners', BannersController::class);
+Route::resource('categorys', CategoryApiController::class);
+Route::resource('books', BooksApiController::class);
 
 Route::resource('products', ApiProductController::class);
 Route::resource('Consultation', ConsultationController::class);
