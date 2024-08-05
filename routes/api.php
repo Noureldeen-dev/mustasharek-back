@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Api\ProductControllerApi;
+use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Models\city;
@@ -29,6 +30,7 @@ use Laravel\Passport\Passport;
 //products
 Route::get('orders/{user_id}/order_product', [OrderController::class, 'getOrderWithProducts']);
 
+Route::apiResource('transactions', TransactionController::class);
 Route::resource('banners', BannersController::class);
 Route::resource('categorys', CategoryApiController::class);
 Route::resource('books', BooksApiController::class);
