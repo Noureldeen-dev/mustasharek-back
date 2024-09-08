@@ -36,12 +36,11 @@ class ConsultationApiController  extends Controller
     public function store(Request $request)
     {
         $user = Auth::guard('api')->user();
-   
+    
         $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
             'value' => 'required|numeric',
-            
         ]);
     
         if ($request->hasFile('file')) {

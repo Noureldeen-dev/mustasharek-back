@@ -15,13 +15,14 @@
                     <!-- menu item Elements-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#elements">
-                            <div class="pull-left"><i class="ti-user"></i><span class="right-nav-text">المسؤولين</span>
+                            <div class="pull-left"><i class="ti-user"></i><span class="right-nav-text">المستخدمين</span>
                             </div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="elements" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="{{ route('admins.index') }}">معالجة بيانات المسؤولين</a></li>
+                         <!--   <li><a href="{{ route('admins.index') }}">معالجة بيانات المسؤولين</a></li>-->
+                            <li><a href="{{ route('users.index') }}">معالجة بيانات المستخدمين</a></li>
 
                         </ul>
                     </li>
@@ -81,6 +82,19 @@
                         </a>
                         <ul id="banner" class="collapse" data-parent="#sidebarnav">
                             <li><a href="{{ route('banner.index') }}">معالجة بيانات البانرات </a></li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#newss">
+                            <div class="pull-left"><i class="ti-harddrives"></i><span
+                                    class="right-nav-text">الأخبار </span>
+                            </div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="newss" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('newss.index') }}">معالجة بيانات الاخبار </a></li>
                             
                         </ul>
                     </li>

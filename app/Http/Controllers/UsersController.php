@@ -91,35 +91,30 @@ class UsersController extends Controller
         $valid = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'avatar' =>    'mimes:png,jpg,jpeg',
+        
             'phone' => 'required|numeric',
-            'address' => 'required',
+          
         ], [
             'name.required' => 'الإسم مطلوب',
             'email.required' => 'البريد الالكتروني مطلوب',
             'email.email' => 'البريد الالكتروني غير صالح',
             'phone.required' => ' رقم الهاتف مطلوب',
-            'avatar.mimes' => 'صيغة الصورة غير صالحة',
+            
         ]);
         $id = Crypt::decrypt($id);
         $user = User::findOrFail($id);
         try {
 
-            if ($request->has('avatar')) {
-                $file = time() . uniqid() . $request->avatar->getClientOriginalName();
-                $request->avatar->move(public_path('assets/images/users/'), $file);
-            } else {
-                $file = $user->avatar;
-            }
+         
             $password = $request->filled('password') ? $request->password : $user->password;
 
             $user->update([
                 'name' => $request->name,
                 'password' => $password,
                 'email' =>    $request->email,
-                'avatar' =>    $file,
+           
                 'phone' => $request->phone,
-                'address' => $request->address,
+              
             ]);
             toast('تمت العملية بنجاح', 'success');
         } catch (Exception $e) {

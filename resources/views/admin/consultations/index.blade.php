@@ -39,6 +39,7 @@
                                 <th>الرقم</th>
                                 <th>اسم المستخدم</th>
                                 <th>تصنيف الإستشارة</th>
+                                <th>حالة الإستشارة </th>
                                 <th>تعديلات</th>
                             </tr>
                         </thead>
@@ -49,6 +50,20 @@
 
                                 <td>{{ $Cons->user->name }}</td>
                                 <td>{{ $Cons->consultationcat->name }}</td>
+                             
+                                <td class="{{ $Cons->status === 'open' ? 'bg-success' : ($Cons->status === 'pending' ? 'bg-warning' : 'bg-danger') }}">
+   
+    <form action="{{ route('consultations.update.status', $Cons->id) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('PATCH')
+        <select name="status" onchange="this.form.submit()" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; cursor: pointer;">
+            <option value="open" {{ $Cons->status == 'open' ? 'selected' : '' }}>مفتوح</option>
+            <option value="closed" {{ $Cons->status == 'closed' ? 'selected' : '' }}>مغلق</option>
+            <option value="pending" {{ $Cons->status == 'pending' ? 'selected' : '' }}>قيد الانتظار</option>
+        </select>
+    </form>
+</td>
+
 
 
 

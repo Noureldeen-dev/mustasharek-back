@@ -17,4 +17,9 @@ class Consultation  extends Model
     {
         return $this->belongsTo(ConsultationsCategories::class, 'consultations_id', 'id');
     }
+    public function replies()
+{
+    return $this->hasMany(replies_consultations::class);
+}
+
 }

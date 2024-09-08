@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Brand;
 use App\Models\Consultation;
+use App\Models\replies_consultations;
 use App\Models\section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -16,7 +17,7 @@ class ConsultationsController extends Controller
      */
     public function index()
     {
-        $Con = Consultation::latest()->get();
+        $Con = Consultation::with('replies.user')->latest()->get();
         return view('admin.consultations.index', compact('Con'));
     }
     public function download($file)
@@ -41,22 +42,39 @@ class ConsultationsController extends Controller
      */
     public function store(Request $request)
     {
-        $valid = $request->validate(
-            [
-                'name' => 'required',
-            ],
-            [
-                'name.required' => 'الإسم مطلوب',                
-            ]
-        );
-        try {
+        $valid = $request->validate([
+            'reply' => 'required',
+            'consultation_id' => 'required',
+           
+        ], [
+            'reply.required' => 'التعليق  مطلوب',
 
-            Brand::create($valid);            
+
+        ]);
+ 
+      
+            if ($request->hasFile('file')) {
+                $image = $request->file('file');
+                $imageName = $image->getClientOriginalName();
+                $imagePath = $image->move(public_path('consultation'), $imageName);
+                $replies = replies_consultations::create(array_merge($valid, [
+                    'file' => $imageName,
+                    'user_id' => auth()->id(),
+                ]));
+            
+            }else{
+                $replies = replies_consultations::create(array_merge($valid, [
+                    'user_id' => auth()->id(),
+                ]));
+            }
+           
+            
+            
+          
+            $replies->save();
             toast('تمت العملية بنجاح', 'success');
-        } catch (Exception $e) {
-
-        }
-
+       
+        
         return back();
     }
 
@@ -102,7 +120,18 @@ class ConsultationsController extends Controller
         }
         return back();
     }
-
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:open,closed,pending',
+        ]);
+    
+        $consultation = Consultation::findOrFail($id);
+        $consultation->status = $request->status;
+        $consultation->save();
+    
+        return redirect()->back()->with('success', 'حالة الاستشارة تم تغييرها بنجاح.');
+    }
     /**
      * Remove the specified resource from storage.
      */

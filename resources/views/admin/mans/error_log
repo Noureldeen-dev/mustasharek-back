@@ -1,0 +1,4 @@
+[01-Sep-2024 11:50:24 UTC] PHP Fatal error:  Uncaught Error: Class "Alert" not found in /home/mustesha/public_html/mustasharek-back/resources/views/admin/mans/index.blade.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-back/resources/views/admin/mans/index.blade.php on line 35

@@ -1,0 +1,12 @@
+[23-Jun-2024 08:08:46 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Http\Kernel" not found in /home/mustesha/public_html/mustasharek-git/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Http/Kernel.php on line 7
+[23-Jun-2024 08:08:46 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Http\Kernel" not found in /home/mustesha/public_html/mustasharek-git/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Http/Kernel.php on line 7
+[11-Aug-2024 14:09:42 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Http\Kernel" not found in /home/mustesha/public_html/mustasharek-back/app/Http/Kernel.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-back/app/Http/Kernel.php on line 7

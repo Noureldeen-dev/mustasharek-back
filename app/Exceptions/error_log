@@ -1,0 +1,12 @@
+[27-Jun-2024 19:12:16 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Exceptions\Handler" not found in /home/mustesha/public_html/mustasharek-git/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Exceptions/Handler.php on line 8
+[27-Jun-2024 19:13:33 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Exceptions\Handler" not found in /home/mustesha/public_html/mustasharek-git/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Exceptions/Handler.php on line 8
+[05-Aug-2024 10:50:33 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Exceptions\Handler" not found in /home/mustesha/public_html/mustasharek-back/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-back/app/Exceptions/Handler.php on line 8

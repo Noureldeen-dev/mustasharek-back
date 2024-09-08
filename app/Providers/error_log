@@ -1,0 +1,40 @@
+[03-Aug-2024 08:04:39 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Support\Providers\RouteServiceProvider" not found in /home/mustesha/public_html/mustasharek-git/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Providers/RouteServiceProvider.php on line 11
+[03-Aug-2024 08:04:39 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Support\Providers\RouteServiceProvider" not found in /home/mustesha/public_html/mustasharek-git/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Providers/RouteServiceProvider.php on line 11
+[03-Aug-2024 08:04:41 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Support\Providers\AuthServiceProvider" not found in /home/mustesha/public_html/mustasharek-git/app/Providers/AuthServiceProvider.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Providers/AuthServiceProvider.php on line 9
+[03-Aug-2024 08:04:41 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Support\Providers\AuthServiceProvider" not found in /home/mustesha/public_html/mustasharek-git/app/Providers/AuthServiceProvider.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Providers/AuthServiceProvider.php on line 9
+[03-Aug-2024 08:04:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Support\Providers\EventServiceProvider" not found in /home/mustesha/public_html/mustasharek-git/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Providers/EventServiceProvider.php on line 10
+[03-Aug-2024 08:04:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Support\Providers\EventServiceProvider" not found in /home/mustesha/public_html/mustasharek-git/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-git/app/Providers/EventServiceProvider.php on line 10
+[07-Aug-2024 11:11:19 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Support\Providers\RouteServiceProvider" not found in /home/mustesha/public_html/mustasharek-back/app/Providers/RouteServiceProvider.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-back/app/Providers/RouteServiceProvider.php on line 11
+[22-Aug-2024 08:09:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\ServiceProvider" not found in /home/mustesha/public_html/mustasharek-back/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-back/app/Providers/BroadcastServiceProvider.php on line 8
+[22-Aug-2024 08:09:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\ServiceProvider" not found in /home/mustesha/public_html/mustasharek-back/app/Providers/BroadcastServiceProvider.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-back/app/Providers/BroadcastServiceProvider.php on line 8
+[02-Sep-2024 02:33:49 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Support\Providers\EventServiceProvider" not found in /home/mustesha/public_html/mustasharek-back/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/mustesha/public_html/mustasharek-back/app/Providers/EventServiceProvider.php on line 10

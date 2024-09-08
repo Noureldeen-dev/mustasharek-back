@@ -1,10 +1,15 @@
 @extends('layouts.master')
 @section('css')
 @section('title')
-    <?php echo $title = 'اقسام الإستشارات'; ?>
+    <?php
+
+use RealRashid\SweetAlert\Facades\Alert;
+
+ echo $title = ' الأخبار'; ?>
 @stop
 @endsection
 @section('page-header')
+
 <!-- breadcrumb -->
 <div class="page-title">
     <div class="row">
@@ -39,23 +44,28 @@
                         <thead>
                             <tr>
                                 <th>الرقم</th>
-                                <th>اسم القسم</th>
-                                <th>السعر</th>
-                                <th>صورة القسم</th>
+                                <th>عنوان الخبر</th>
+                                <th>محتوي الخبر</th>
+                        
+                                <th>صورة الخبر</th>
                                 <th>تعديلات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($bookcategories as $bookcat)
+                            @foreach ($news as $bookcat)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $bookcat->name }}</td>
-                                    <td>{{ $bookcat->price }}</td>
+                                    <td>{{ $bookcat->title }}</td>
+                                    <td>{{ $bookcat->content }}</td>
+                                  
+                                 
                                     <td>
-                                    <a href="#" class="btn btn-primary book-image-btn" data-image="{{ asset('cocat/' . $bookcat->image) }}">
+                                    <a href="#" class="btn btn-primary book-image-btn" data-image="{{ asset('news/' . $bookcat->picture) }}">
     عرض الصورة
 </a>
             </td>
+                                  
+
                                
                                     <td>
                                         <button type="button" data-toggle="modal"
@@ -68,11 +78,12 @@
                                     </td>
                                 </tr>
                 </div>
-                <div class="modal fade" id="bookImageModal" tabindex="-1" aria-labelledby="bookImageModalLabel" aria-hidden="true">
+                <!-- Modal -->
+<div class="modal fade" id="bookImageModal" tabindex="-1" aria-labelledby="bookImageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="bookImageModalLabel">صورة القسم</h5>
+                <h5 class="modal-title" id="bookImageModalLabel">صورة الكتاب</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -81,56 +92,51 @@
         </div>
     </div>
 </div>
+
+
                 <!-- edit_modal_Section -->
-                <div class="modal fade" id="edit{{ $bookcat->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">
-                                    تعديل بيانات القسم
-                                </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="{{ route('consultationsCategories.update', Crypt::encrypt($bookcat->id)) }}" enctype="multipart/form-data"
-                                    method="post">
-                                    {{ method_field('put') }}
-                                    @csrf
-                                    <label for="Name" class="mr-sm-2"> الاسم
-                                        :</label>
-                                    <input class="form-control" type="text" value="{{ $bookcat->name }}"
-                                        name="name" required />
-                                        <label for="Name" class="mr-sm-2"> السعر
-                                        :</label>
-                                    <input class="form-control" type="number" value="{{ $bookcat->price }}"
-                                        name="price" required />
-                                        <div class="form-group">
-                        <label for="image" class="mr-sm-2">الصورة:</label>
+<div class="modal fade" id="edit{{ $bookcat->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">تعديل بيانات الكتاب</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('newss.update', Crypt::encrypt($bookcat->id)) }}" enctype="multipart/form-data" method="post">
+                    {{ method_field('put') }}
+                    @csrf
+                    <div class="form-group">
+                        <label for="Name" class="mr-sm-2">عنوان الخبر:</label>
+                        <input class="form-control" type="text" value="{{ $bookcat->title }}" name="title" required />
+                    </div>
+                    <div class="form-group">
+    <label for="content" class="mr-sm-2">المحتوى:</label>
+    <textarea class="form-control" name="content" rows="5" required>{{ $bookcat->content }}</textarea>
+</div>
+                  
+                    
+                    <div class="form-group">
+                        <label for="picture" class="mr-sm-2">الصورة:</label>
                         <div class="d-flex align-items-center">
-                            <img src="{{ asset('cocat/' . $bookcat->image) }}" alt="{{ $bookcat->name }} Image" class="img-thumbnail mr-3" style="max-width: 100px;">
+                            <img src="{{ asset('news/' . $bookcat->picture) }}" alt="{{ $bookcat->name }} Image" class="img-thumbnail mr-3" style="max-width: 100px;">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="image" name="image">
-                                <label class="custom-file-label" for="image">اختر صورة</label>
+                                <input type="file" class="custom-file-input" id="picture" name="picture">
+                                <label class="custom-file-label" for="picture">اختر صورة</label>
                             </div>
                         </div>
                     </div>
-
-                                     
-
-                                    <br><br>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">رجوع</button>
-                                <button type="submit" class="btn btn-success">حفظ</button>
-                            </div>
-                            </form>
-
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">رجوع</button>
+                        <button type="submit" class="btn btn-success">حفظ</button>
                     </div>
-                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
                 <!-- delete_modal_Section -->
                 <div class="modal fade" id="delete{{ $bookcat->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,19 +144,19 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">
-                                    حذف القسم
+                                    حذف الكتاب
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('consultationsCategories.destroy', Crypt::encrypt($bookcat->id)) }}"
+                                <form action="{{ route('newss.destroy', Crypt::encrypt($bookcat->id)) }}"
                                     method="post">
                                     {{ method_field('Delete') }}
                                     @csrf
                                     <h3 class="text-center">هل انت متأكد من عملية الحذف ؟</h3>
-                                    <p class="text-center"> اذا تم الحذف سوف يتم حذف كل ماهو متعلق بهذا القسم</p>
+                                    <p class="text-center"> اذا تم الحذف سوف يتم حذف كل ماهو متعلق بهذا الكتاب</p>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">رجوع</button>
@@ -178,30 +184,35 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    اضافة قسم استشاره  جديد
+                    اضافة  خبر جديد
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('consultationsCategories.store') }}" enctype="multipart/form-data" method="POST">
-                    @csrf
-                    <label for="Name" class="mr-sm-2"> الاسم:</label>
-                    <input class="form-control" type="text" name="name" required />
-                    <label for="Name" class="mr-sm-2"> السعر:</label>
-                    <input class="form-control" type="number" name="price" required />
-                    <div class="form-group">
-            <label for="image" class="mr-sm-2">صورة القسم:</label>
-            <input class="form-control-file" type="file" name="image" required />
+    <form action="{{ route('newss.store') }}" enctype="multipart/form-data" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="title" class="mr-sm-2">العنوان:</label>
+            <input class="form-control" type="text" name="title" required />
         </div>
-                    <br><br>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الرجوع</button>
-                        <button type="submit" class="btn btn-success">حفظ</button>
-                    </div>
-                </form>
-            </div>
+      
+        <div class="form-group">
+    <label for="content" class="mr-sm-2">المحتوى:</label>
+    <textarea class="form-control" name="content" rows="5" required></textarea>
+</div>
+     
+        <div class="form-group">
+            <label for="picture" class="mr-sm-2">صورة الخبر:</label>
+            <input class="form-control-file" type="file" name="picture" required />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">الرجوع</button>
+            <button type="submit" class="btn btn-success">حفظ</button>
+        </div>
+    </form>
+</div>
         </div>
     </div>
 </div>
@@ -210,6 +221,8 @@
 
 @endsection
 @section('js')
+
+
 <script>
     $(document).ready(function() {
         $('.book-image-btn').click(function() {
@@ -219,4 +232,5 @@
         });
     });
 </script>
+
 @endsection

@@ -36,18 +36,29 @@ class ConsultationsCategoriesController extends Controller
             [
                 'name' => 'required',
                 'price' => 'required',
+                'image' => 'required',
+                
             ],
             [
                 'name.required' => 'الإسم مطلوب',
                 'price.required' => 'السعر مطلوب',
+                'image.required' => 'صورة التصنيف مطلوب',
             ]
         );
         try {
+     // Handle image upload
+     $image = $request->file('image');
+     $imageName = $image->getClientOriginalName();
+     $imagePath = $image->move(public_path('cocat'), $imageName);
+ 
+ 
+     $bookcategories = ConsultationsCategories::create(array_merge($valid, [
+         'image' => $imageName,
+     ]));
+ 
+     $bookcategories->save();
+     toast('تمت العملية بنجاح', 'success');
 
-            $bookcategories = ConsultationsCategories::create($valid);
-           
-            $bookcategories->save();
-            toast('تمت العملية بنجاح', 'success');
         } catch (Exception $e) {
 
         }
@@ -89,8 +100,27 @@ class ConsultationsCategoriesController extends Controller
         $id = Crypt::decrypt($id);
         try {
             $bookcategories = ConsultationsCategories::findOrFail($id);
+
+            if ($request->hasFile('image')) {
+               
+                $image = $request->file('image');
+                $imageName = $image->getClientOriginalName();
+                $imagePath = $image->move(public_path('cocat'), $imageName);
+
+
+                $bookcategories->name = $request->name;
+            $bookcategories->price = $request->price;
+
+            $bookcategories->image =$imageName;
+            }else{
+              
+                $bookcategories->name = $request->name;
+            $bookcategories->price = $request->price;
+            }
+
+           
             
-            $bookcategories->update($valid);
+            $bookcategories->save();
           
             $bookcategories->save();
             toast('تمت العملية بنجاح', 'success');

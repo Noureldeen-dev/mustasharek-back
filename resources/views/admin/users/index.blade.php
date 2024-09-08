@@ -23,9 +23,7 @@
 @endsection
 @section('content')
 <!-- row -->
-<button type="button" class="button x-small" data-toggle="modal" data-target="#exampleModal">
-    إضافة
-</button>
+
 <br><br>
 <div class="row">
     <div class="col-xl-12 mb-30">
@@ -39,11 +37,11 @@
                         <thead>
                             <tr>
                                 <th>الرقم</th>
-                                <th> صورة الشخصية </th>
+                             
                                 <th> أسم المستخدم</th>
                                 <th>البريد الإلكتروني </th>
                                 <th> رقم الهاتف </th>
-                                <th>العنوان  </th>
+                          
                                 <th>تاريخ التسجيل</th>
                                 <th>تعديلات</th>
 
@@ -53,15 +51,13 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><img class="img-fluid sameImg avatar-small"
-                                            src="{{ asset('assets/images/users/' . $user->avatar) }}" alt="">
-                                    </td>
+                                
                                     <td>{{ $user->name }}</td>
                                     <td><a class="text-primary"
                                             href="mailto:{{ $user->email }}">{{ $user->email }}</a> </td>
                                             <td>{{ $user->phone }}</td>
-                                            <td>{{ $user->address }}</td>
-                                    <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                                  
+                                            <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}</td>
 
                                     <td>
                                         <button type="button" data-toggle="modal"
@@ -106,17 +102,12 @@
                                     <label for="Name" class="mr-sm-2"> الرمز السري
                                         :</label>
                                     <input class="form-control" type="password" name="password" />
-                                    <label for="Name" class="mr-sm-2"> الصورة الشخصية
-                                        :</label>
-                                    <input class="form-control" type="file" name="avatar" />
+                                  
                                     <label for="Name" class="mr-sm-2"> رقم الهاتف
                                         :</label>
                                     <input class="form-control" type="number" name="phone"
                                         value="{{ $user->phone }}" required />
-                                    <label for="Name" class="mr-sm-2">العنوان
-                                        :</label>
-                                    <input class="form-control" type="text" name="address" "
-                                        value="{{ $user->address }}" required>
+                                 
                                         <br><br>
                             </div>
                             <div class="modal-footer">
@@ -193,9 +184,7 @@
                                 <label for="Name" class="mr-sm-2"> الرمز السري
                                     :</label>
                                 <input class="form-control" type="password" name="password" required />
-                                <label for="Name" class="mr-sm-2"> الصورة الشخصية
-                                    :</label>
-                                <input class="form-control" type="file" name="avatar" required />
+                           
                                 <label for="Name" class="mr-sm-2"> رقم الهاتف
                                     :</label>
                                 <input class="form-control" type="number" name="phone" required />

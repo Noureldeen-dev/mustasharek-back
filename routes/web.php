@@ -26,9 +26,11 @@ use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\DeliveryManController;
 use App\Http\Controllers\DeliveryAreaController;
 use App\Http\Controllers\CustomerOpinionController;
+
 use App\Http\Controllers\OrderDeliveryController;
 use App\Http\Controllers\SizeController;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\NewsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,7 +47,7 @@ Route::get('/migrate', function () {
     Artisan::call('migrate');
     return 'Database migration completed successfully!';
 })->name('migrate');
-
+Route::resource('newss', NewsController::class);
 Auth::routes(['register' => false]);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -60,6 +62,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('bookcategories', BookCategoriesController::class);
     Route::resource('book', BookController::class);
     Route::resource('banner', BannerController::class);
+ 
+    Route::patch('consultations/{id}/status', [ConsultationsController::class, 'updateStatus'])->name('consultations.update.status');
+    Route::resource('users', UserController::class);
     Route::resource('consultationsCategories', ConsultationsCategoriesController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('consultations', ConsultationsController::class);
